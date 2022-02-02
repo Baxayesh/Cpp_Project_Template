@@ -9,7 +9,7 @@ HEADERS_ADDR = code/headers
 DEPENDENCY_H = $(HEADERS_ADDR)/dependency.hpp
 EXAMPE_H = $(HEADERS_ADDR)/example.hpp
 
-DIPENDENCIES = $(DEPENDENCY_H) $(EXAMPE_H)
+DIPENDENCIES = $(DEPENDENCY_H) $(EXAMPE_H) #and other headers
 
 run: $(FINAL_FILE)
 	./$(FINAL_FILE)
