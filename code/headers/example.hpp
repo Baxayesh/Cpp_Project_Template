@@ -4,8 +4,8 @@
 class Example{
 public:
   Example();
-  func1();
-  func2();
+  void func1();
+  void func2();
 };
 
 
