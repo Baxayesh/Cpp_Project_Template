@@ -1,3 +1,5 @@
+#include "dependency.hpp"
+
 #ifndef __EXAMPLE_HPP__
   #define __EXAMPLE_HPP__
 
