@@ -35,5 +35,6 @@ build/example.o: code/example.cpp $(DIPENDENSIES) #or $(EXAMPE_H) $(DEPENDENCY_H
 #	$(COMPILE) -c code/x.cpp -o build/x.o
 
 clean:
-	rm -r build/*.o $(TARGET)
+	@rm -r build/*.o $(TARGET)
+	@echo "cleaned up successfully"
 
