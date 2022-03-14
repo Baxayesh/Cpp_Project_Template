@@ -1,4 +1,4 @@
-#	made by Mohammad Reza Baxayesh
+#	makefile made by Mohammad Reza Baxayesh
 #	m.r.Bakhshayesh1123@gmail.com
 
 CC = g++ 
@@ -6,6 +6,7 @@ CFLAGS = --std=c++11
 COMPILE = $(CC) $(CFLAGS)
 
 TARGET = Baxayesh.out
+
 
 HEADERS_ADDR = code/headers
 #determining name of folder to store .o files
@@ -17,31 +18,31 @@ EXAMPE_H = $(HEADERS_ADDR)/example.hpp
 DIPENDENCIES = $(DEPENDENCY_H) $(EXAMPE_H) #and other headers
 
 .PHONY: run clean 
-.DEFAULT_GOAL := $(TARGET)
 
-run: $(TARGET)
-	./$(TARGET)
+all: $(BUILD) $(TARGET)
 
-$(TARGET): $(BUILD) $(BUILD)/main.o $(BUILD)/example.o # and other object files
-	$(COMPILE) $(BUILD)/*.o -o $(TARGET)
+$(TARGET): $(BUILD)/main.o $(BUILD)/example.o # and other object files
+	$(COMPILE) $^ -o $@
 
 $(BUILD)/main.o: code/main.cpp $(DIPENDENSIES)
-	$(COMPILE) -c code/main.cpp -o $(BUILD)/main.o
-
+	$(COMPILE) -c $< -o $@
 
 $(BUILD)/example.o: code/example.cpp $(DIPENDENSIES) #or $(EXAMPE_H) $(DEPENDENCY_H)
-	$(COMPILE) -c code/example.cpp -o $(BUILD)/example.o
+	$(COMPILE) -c $< -o $@
 
 
 #here u must include other files in this format:
 #$(BUILD)/x.o: code/x.cpp $(DIPENDENSIES) # u can name of all of your dependent headers instead of using $(DIPENDENSIES)
-#	$(COMPILE) -c code/x.cpp -o $(BUILD)/x.o
+#	$(COMPILE) -c $< -o $@
 
 
 $(BUILD):
 	@mkdir -p $@
 
+run: all
+	./$(TARGET)
+
 clean:
-	@rm -r $(BUILD)/*.o $(TARGET)
+	@rm -rf $(BUILD)/*.o $(TARGET)
 	@echo "cleaned up successfully"
 
