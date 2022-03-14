@@ -1,12 +1,16 @@
 #	makefile made by Mohammad Reza Baxayesh
 #	contact me: m.r.Bakhshayesh1123@gmail.com
 
-CC = g++ 
-CFLAGS = --std=c++11
-COMPILE = $(CC) $(CFLAGS)
+CC = g++ 								#used compiler
+CFLAGS = --std=c++11					#common compiler flags
+LDFLAGS =								#flags for linking required liberaries
+COMPILE = $(CC) $(CFLAGS) 				#common form of compile command
 
-TARGET = Baxayesh.out
+TARGET = Baxayesh.out					#name of executable file
 
+SOURCES = $(wildcard code/*.cpp) /		#list of all .source code files
+#		  $(wildcard <directory name/*.cpp>    #this way u can add more code directories
+OBJECTS = $(SOURCES:.cpp=.o)
 
 HEADERS_ADDR = code/headers
 BUILD = build 
@@ -21,7 +25,7 @@ DIPENDENCIES = $(DEPENDENCY_H) $(EXAMPE_H) #and other headers
 all: $(BUILD) $(TARGET)
 
 $(TARGET): $(BUILD)/main.o $(BUILD)/example.o # and other object files
-	$(COMPILE) $^ -o $@
+	$(COMPILE) $(LDFLAGS) $^ -o $@
 
 $(BUILD)/main.o: code/main.cpp $(DIPENDENSIES)
 	$(COMPILE) -c $< -o $@
