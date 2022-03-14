@@ -7,6 +7,7 @@
 #SOURCE += x.cpp or SOURCE += $(wildcard dir/*.cpp)
 
 #next change clue:
+#(i should manage program to store .d and .o files in a diferent folder)
 #https://stackoverflow.com/questions/25966411/autodependencies-for-make-generate-the-d-files-but-are-not-reading-them
 
 CC = g++
