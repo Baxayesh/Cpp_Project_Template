@@ -1,5 +1,5 @@
 #	makefile made by Mohammad Reza Baxayesh
-#	m.r.Bakhshayesh1123@gmail.com
+#	contact me: m.r.Bakhshayesh1123@gmail.com
 
 CC = g++ 
 CFLAGS = --std=c++11
@@ -9,7 +9,6 @@ TARGET = Baxayesh.out
 
 
 HEADERS_ADDR = code/headers
-#determining name of folder to store .o files
 BUILD = build 
 
 DEPENDENCY_H = $(HEADERS_ADDR)/dependency.hpp
