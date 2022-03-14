@@ -8,6 +8,8 @@ COMPILE = $(CC) $(CFLAGS)
 TARGET = Baxayesh.out
 
 HEADERS_ADDR = code/headers
+#determining name of folder to store .o files
+BUILD = build 
 
 DEPENDENCY_H = $(HEADERS_ADDR)/dependency.hpp
 EXAMPE_H = $(HEADERS_ADDR)/example.hpp
@@ -20,26 +22,26 @@ DIPENDENCIES = $(DEPENDENCY_H) $(EXAMPE_H) #and other headers
 run: $(TARGET)
 	./$(TARGET)
 
-$(TARGET): build build/main.o build/example.o # and other object files
-	$(COMPILE) build/*.o -o $(TARGET)
+$(TARGET): $(BUILD) $(BUILD)/main.o $(BUILD)/example.o # and other object files
+	$(COMPILE) $(BUILD)/*.o -o $(TARGET)
 
-build/main.o: code/main.cpp $(DIPENDENSIES)
-	$(COMPILE) -c code/main.cpp -o build/main.o
+$(BUILD)/main.o: code/main.cpp $(DIPENDENSIES)
+	$(COMPILE) -c code/main.cpp -o $(BUILD)/main.o
 
 
-build/example.o: code/example.cpp $(DIPENDENSIES) #or $(EXAMPE_H) $(DEPENDENCY_H)
-	$(COMPILE) -c code/example.cpp -o build/example.o
+$(BUILD)/example.o: code/example.cpp $(DIPENDENSIES) #or $(EXAMPE_H) $(DEPENDENCY_H)
+	$(COMPILE) -c code/example.cpp -o $(BUILD)/example.o
 
 
 #here u must include other files in this format:
-#build/x.o: code/x.cpp $(DIPENDENSIES) # u can name of all of your dependent headers instead of using $(DIPENDENSIES)
-#	$(COMPILE) -c code/x.cpp -o build/x.o
+#$(BUILD)/x.o: code/x.cpp $(DIPENDENSIES) # u can name of all of your dependent headers instead of using $(DIPENDENSIES)
+#	$(COMPILE) -c code/x.cpp -o $(BUILD)/x.o
 
 
-build:
+$(BUILD):
 	@mkdir -p $@
 
 clean:
-	@rm -r build/*.o $(TARGET)
+	@rm -r $(BUILD)/*.o $(TARGET)
 	@echo "cleaned up successfully"
 
