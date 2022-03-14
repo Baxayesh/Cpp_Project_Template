@@ -2,32 +2,34 @@
 #	contact me: m.r.Bakhshayesh1123@gmail.com
 
 CC = g++
-CFLAGS = --std=c++11
+CFLAGS = --std=c++11 -MMD
 LDFLAGS =
 COMPILE = $(CC) $(CFLAGS)
 
 TARGET = Baxayesh.out
-
-SOURCES = $(wildcard code/*.cpp) 
-#		  $(wildcard <directory name/*.cpp>
+SOURCES = $(wildcard code/*.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
+DEPENDENCIES = $(OBJECTS:.o=.d)
 
+
+.DEFAULT_GOAL: all
+.PHONY: run clean cleandep
 
 all: $(TARGET)
 
-$(TARGET): $(OBJECTS) # and other object files
+$(TARGET): $(OBJECTS)
 	$(COMPILE) $^ -o $@ $(LDFLAGS)
+
+-include $(DEPENDENCIES)
 
 %.o: %.cpp
 	$(COMPILE) -c $< -o $@
-
-
-.PHONY: all run clean 
 
 run: all
 	./$(TARGET)
 
 clean:
-	@rm -rf code/*.o $(TARGET)
-	@echo "cleaned up successfully"
+	rm -f $(OBJECTS) $(TARGET)
 
+cleandep:
+	rm -f $(DEPENDENCIES)
