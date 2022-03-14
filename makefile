@@ -3,7 +3,6 @@
 
 CC = g++ 
 CFLAGS = --std=c++11
-
 COMPILE = $(CC) $(CFLAGS)
 
 TARGET = Baxayesh.out
@@ -14,6 +13,9 @@ DEPENDENCY_H = $(HEADERS_ADDR)/dependency.hpp
 EXAMPE_H = $(HEADERS_ADDR)/example.hpp
 
 DIPENDENCIES = $(DEPENDENCY_H) $(EXAMPE_H) #and other headers
+
+.PHONY: run clean
+.DEFAULT_GOAL := $(TARGET)
 
 run: $(TARGET)
 	./$(TARGET)
