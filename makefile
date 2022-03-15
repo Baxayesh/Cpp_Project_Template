@@ -1,6 +1,8 @@
 #	makefile made by Mohammad Reza Baxayesh
 #	contact me: m.r.Bakhshayesh1123@gmail.com
 
+#Warning: using file or directory names that contain spaces may cuase some problem
+
 #in order to use:
 #change OUTPUT to the output name you want
 #add directories that contain project sourcecode to SOURCE_DIRS
