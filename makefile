@@ -16,29 +16,34 @@ OUTPUT := Baxayesh.out
 SOURCE_DIRS :=
 HEADER_DIRS:=
 OBJECT_DIR :=
-DEPENDENCY_DIR :=
+DEPENDENCY_DIR := .build/dependencies
 
 
 #makefile variables
 CXX := g++
-CPPFLAGS := --std=c++11 -MMD
+CPPFLAGS = -MMD -MF $(DEPENDENCY_DIR)/$(basename $(@F)).d
+CXXFLAGS := --std=c++11 
 LDFLAGS :=
 LDLIBS :=
 
 sources := $(wildcard code/*.cpp)
 objects := $(sources:.cpp=.o)
-dependencies := $(objects:.o=.d)
+dependencies := $(addprefix $(DEPENDENCY_DIR)/,$(notdir $(objects:.o=.d)))
 
 #compile rules
 .DEFAULT_GOAL: all
 
-all: $(OUTPUT)
+all: $(DEPENDENCY_DIR) $(OUTPUT)
 
 $(OUTPUT): $(objects)
-	$(COMPILE) $(LDFLAGS) $^ $(LDLIBS) -o $@ 
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@ 
 
 %.o: %.cpp
-	$(CXX) $(CPPFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@ 
+
+#non-compile rules
+$(DEPENDENCY_DIR):
+	mkdir -p $@
 
 #phonies
 .PHONY: run clean cleanobj cleandep
