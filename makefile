@@ -5,16 +5,22 @@
 #change OUTPUT to the output name you want
 #add directories that contain project sourcecode to SOURCE_DIRS
 #you also can change compiler flags, add needed liberaries ... etc. if you need it
+#this makefile will automatically find dependencies so you dont need to care about it
 
 #project variables (its all you need to change)
 OUTPUT := Baxayesh.out
 SOURCE_DIRS := code 
 
 #compiler variables
+#compiler name
 CXX :=g++
-CPPFLAGS =-MMD -MF $(DEPENDENCY_DIR)/$(basename $(@F)).d 
+#compiler preprocess flags
+CPPFLAGS =-MMD -MF $(DEPENDENCY_DIR)/$(basename $(@F)).d
+#compilation flags
 CXXFLAGS :=--std=c++11
+#linker flags
 LDFLAGS :=
+#loud liberaries
 LDLIBS :=
 
 #makefile variables
