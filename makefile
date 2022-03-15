@@ -1,32 +1,29 @@
 #	makefile made by Mohammad Reza Baxayesh
 #	contact me: m.r.Bakhshayesh1123@gmail.com
 
-#in order to use you just need to add your source code 
-#(or sourcecoe directories) to Source variables
-# for example
-#SOURCE += x.cpp or SOURCE += $(wildcard dir/*.cpp)
+#in order to use:
+#change OUTPUT to the output name you want
+#add directories that contain project sourcecode to SOURCE_DIRS
+#you also can change compiler flags, add needed liberaries ... etc. if you need it
 
-#next change clue:
-#(i should manage program to store .d and .o files in a diferent folder)
-#https://stackoverflow.com/questions/25966411/autodependencies-for-make-generate-the-d-files-but-are-not-reading-them
-
-
-#project variables
+#project variables (its all you need to change)
 OUTPUT := Baxayesh.out
-SOURCE_DIRS := 
-HEADER_DIRS:=
-OBJECT_DIR := .build/objects
-DEPENDENCY_DIR := .build/dependencies
+SOURCE_DIRS := code 
 
-
-#makefile variables
-CXX := g++
-CPPFLAGS = -MMD -MF $(DEPENDENCY_DIR)/$(basename $(@F)).d
-CXXFLAGS := --std=c++11 
+#compiler variables
+CXX :=g++
+CPPFLAGS =-MMD -MF $(DEPENDENCY_DIR)/$(basename $(@F)).d 
+CXXFLAGS :=--std=c++11
 LDFLAGS :=
 LDLIBS :=
 
-sources := $(wildcard code/*.cpp)
+#makefile variables
+#where to save build files (people usualy dont need to see these files)
+BUILD_ROOT := .build
+OBJECT_DIR := $(BUILD_ROOT)/objects
+DEPENDENCY_DIR := $(BUILD_ROOT)/dependencies
+
+sources := $(foreach dir, $(SOURCE_DIRS), $(wildcard $(dir)/*.cpp))
 objects := $(addprefix $(OBJECT_DIR)/, $(sources:.cpp=.o))
 dependencies := $(addprefix $(DEPENDENCY_DIR)/, $(notdir $(objects:.o=.d)))
 
@@ -52,13 +49,14 @@ $(DEPENDENCY_DIR):
 run: all
 	./$(OUTPUT)
 
-clean: cleanobj cleandep
+clean: cleandep cleanobj
+	rm -df $(BUILD_ROOT)
 
 cleanobj:
-	rm -rf $(objects) $(OUTPUT)
+	rm -rf $(OBJECT_DIR) $(OUTPUT)
 
 cleandep:
-	rm -rf $(dependencies)
+	rm -rf $(DEPENDENCY_DIR)
 
 #includes
 -include $(dependencies)
