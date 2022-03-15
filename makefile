@@ -10,34 +10,49 @@
 #(i should manage program to store .d and .o files in a diferent folder)
 #https://stackoverflow.com/questions/25966411/autodependencies-for-make-generate-the-d-files-but-are-not-reading-them
 
-CC := g++
-CFLAGS := --std=c++11 -MMD
+
+#project variables
+OUTPUT := Baxayesh.out
+SOURCE_DIRS :=
+HEADER_DIRS:=
+OBJECT_DIR :=
+DEPENDENCY_DIR :=
+
+
+#makefile variables
+CXX := g++
+CPPFLAGS := --std=c++11 -MMD
 LDFLAGS :=
-COMPILE := $(CC) $(CFLAGS)
+LDLIBS :=
 
-TARGET := Baxayesh.out
-SOURCES := $(wildcard code/*.cpp)
-OBJECTS := $(SOURCES:.cpp=.o)
-DEPENDENCIES := $(OBJECTS:.o=.d)
+sources := $(wildcard code/*.cpp)
+objects := $(sources:.cpp=.o)
+dependencies := $(objects:.o=.d)
 
+#compile rules
 .DEFAULT_GOAL: all
-.PHONY: run clean cleandep
 
-all: $(TARGET)
+all: $(OUTPUT)
 
-$(TARGET): $(OBJECTS)
-	$(COMPILE) $^ -o $@ $(LDFLAGS)
-
--include $(DEPENDENCIES)
+$(OUTPUT): $(objects)
+	$(COMPILE) $(LDFLAGS) $^ $(LDLIBS) -o $@ 
 
 %.o: %.cpp
-	$(COMPILE) -c $< -o $@
+	$(CXX) $(CPPFLAGS) -c $< -o $@
+
+#phonies
+.PHONY: run clean cleanobj cleandep
 
 run: all
-	./$(TARGET)
+	./$(OUTPUT)
 
-clean:
-	rm -f $(OBJECTS) $(TARGET)
+clean: cleanobj cleandep
+
+cleanobj:
+	rm -f $(objects) $(OUTPUT)
 
 cleandep:
-	rm -f $(DEPENDENCIES)
+	rm -f $(dependencies)
+
+#includes
+-include $(dependencies)
