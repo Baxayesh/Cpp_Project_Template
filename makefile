@@ -13,9 +13,9 @@
 
 #project variables
 OUTPUT := Baxayesh.out
-SOURCE_DIRS :=
+SOURCE_DIRS := 
 HEADER_DIRS:=
-OBJECT_DIR :=
+OBJECT_DIR := .build/objects
 DEPENDENCY_DIR := .build/dependencies
 
 
@@ -27,8 +27,8 @@ LDFLAGS :=
 LDLIBS :=
 
 sources := $(wildcard code/*.cpp)
-objects := $(sources:.cpp=.o)
-dependencies := $(addprefix $(DEPENDENCY_DIR)/,$(notdir $(objects:.o=.d)))
+objects := $(addprefix $(OBJECT_DIR)/, $(sources:.cpp=.o))
+dependencies := $(addprefix $(DEPENDENCY_DIR)/, $(notdir $(objects:.o=.d)))
 
 #compile rules
 .DEFAULT_GOAL: all
@@ -38,12 +38,13 @@ all: $(DEPENDENCY_DIR) $(OUTPUT)
 $(OUTPUT): $(objects)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@ 
 
-%.o: %.cpp
+$(OBJECT_DIR)/%.o: %.cpp
+	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@ 
 
 #non-compile rules
 $(DEPENDENCY_DIR):
-	mkdir -p $@
+	@mkdir -p $@
 
 #phonies
 .PHONY: run clean cleanobj cleandep
@@ -54,10 +55,10 @@ run: all
 clean: cleanobj cleandep
 
 cleanobj:
-	rm -f $(objects) $(OUTPUT)
+	rm -rf $(objects) $(OUTPUT)
 
 cleandep:
-	rm -f $(dependencies)
+	rm -rf $(dependencies)
 
 #includes
 -include $(dependencies)
