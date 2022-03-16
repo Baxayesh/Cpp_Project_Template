@@ -11,13 +11,14 @@
 
 #project variables (its all you need to change)
 OUTPUT := Baxayesh.out
-SOURCE_DIRS := code 
+SOURCE_DIRS := code
+
 
 #compiler variables
 #compiler name
 CXX :=g++
 #compiler preprocess flags
-CPPFLAGS =-MMD -MF $(DEPENDENCY_DIR)/$(basename $(@F)).d
+CPPFLAGS =-MMD -MF $(get_dep_adderss)/$(basename $(@F)).d
 #compilation flags
 CXXFLAGS :=--std=c++11
 #linker flags
@@ -38,18 +39,15 @@ dependencies := $(addprefix $(DEPENDENCY_DIR)/, $(notdir $(objects:.o=.d)))
 #compile rules
 .DEFAULT_GOAL: all
 
-all: $(DEPENDENCY_DIR) $(OUTPUT)
+all: $(OUTPUT)
 
 $(OUTPUT): $(objects)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@ 
 
 $(OBJECT_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
+	@mkdir -p $(get_dep_adderss)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@ 
-
-#non-compile rules
-$(DEPENDENCY_DIR):
-	@mkdir -p $@
 
 #phonies
 .PHONY: run clean cleanobj cleandep
@@ -69,3 +67,5 @@ cleandep:
 #includes
 -include $(dependencies)
 
+#macroes
+get_dep_adderss = $(subst $(OBJECT_DIR), $(DEPENDENCY_DIR), $(@D))
