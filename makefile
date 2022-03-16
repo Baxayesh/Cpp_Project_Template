@@ -71,6 +71,4 @@ cleandep:
 
 #next steps:
 #better management for header files
-#changing code examples
 #writing install and uninstall rulles
-#writing test rulles (? I am not sure )
