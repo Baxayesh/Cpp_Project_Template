@@ -25,7 +25,7 @@ LDFLAGS :=
 #loud liberaries
 LDLIBS :=
 
-#makefile variables
+#makefile variables (you wont need to change the rest of makefile)
 #where to save build files (people usualy dont need to see these files)
 BUILD_ROOT := .build
 OBJECT_DIR := $(BUILD_ROOT)/objects
