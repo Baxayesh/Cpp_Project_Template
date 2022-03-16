@@ -7,6 +7,7 @@ An easy to use cpp project template
   - a gitignore
   - license
   - README.md template (this file!)
+  - a note folder just to save project drafts, notes, todo lists, outlines etc.
  
  you can use this tamplate for a fast start on your new projects!
   
