@@ -1,4 +1,5 @@
-*.out
+#APP_NAME from makefile here: baxayesh
+baxayesh
 *.o
 *.d
 .build/

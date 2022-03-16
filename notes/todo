@@ -1,3 +1,2 @@
 next steps:
-    - better management for header files 
-    - writing install and uninstall rulles in makefile
+    - writing a auto makefile maker bash script (i am not sure)

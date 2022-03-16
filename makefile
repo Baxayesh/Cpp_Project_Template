@@ -3,14 +3,19 @@
 
 #WARNING: using file or directory names that contain spaces may cuase some problem
 
+#WARNING: this makefile has a sketchy installer; if you have external liberary, you should 
+#		edit it to install dependent liberary. also changing APP_NAME after installing 
+#		the app will cuase uninstaller to not work currectly
+
 #in order to use:
-#change OUTPUT to the output name you want
+#change APP_NAME to the output name you want and OUTPUT_DIR to where save the output ( . as default )
 #add directories that contain project sourcecode to SOURCE_DIRS
 #you also can change compiler flags, add needed liberaries ... etc. if you need it
 #this makefile will automatically find dependencies so you dont need to care about it
 
 #project variables (its all you need to change)
-OUTPUT := Baxayesh.out
+APP_NAME := baxayesh
+OUTPUT_DIR := .
 SOURCE_DIRS := code
 
 #compiler variables
@@ -42,29 +47,46 @@ dependencies := $(addprefix $(DEPENDENCY_DIR)/, $(sources:.cpp=.d))
 #compile rules
 .DEFAULT_GOAL: all
 
-all: $(OUTPUT)
+EXECUTABLE :=$(OUTPUT_DIR)/$(APP_NAME)
 
-$(OUTPUT): $(objects)
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(objects)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@ 
 
 $(OBJECT_DIR)/%.o: %.cpp
 	@mkdir -p $(@D) $(get_dep_adderss)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@ 
 
-#phonies
+#instalation phonies
+.PHONY: install uninstall
+
+PREFIX :=/usr/local
+
+install: $(EXECUTABLE)
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp $< $(DESTDIR)$(PREFIX)/bin/$(APP_NAME)
+	@echo program installed successfully
+
+uninstall:
+	rm -f $(DESTDIR)$(PREFIX)/bin/$(APP_NAME)
+	@echo program uninstalled successfully
+
+#other phonies
 .PHONY: run clean cleanobj cleandep
 
 run: all
-	./$(OUTPUT)
+	$(EXECUTABLE)
 
 clean: cleandep cleanobj
 	rm -df $(BUILD_ROOT)
 
 cleanobj:
-	rm -rf $(OBJECT_DIR) $(OUTPUT)
+	rm -rf $(OBJECT_DIR) $(EXECUTABLE)
 
 cleandep:
 	rm -rf $(DEPENDENCY_DIR)
+
 
 #includes
 -include $(dependencies)
