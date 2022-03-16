@@ -13,12 +13,11 @@
 OUTPUT := Baxayesh.out
 SOURCE_DIRS := code
 
-
 #compiler variables
 #compiler name
 CXX :=g++
 #compiler preprocess flags
-CPPFLAGS =-MMD -MF $(get_dep_adderss)/$(basename $(@F)).d
+CPPFLAGS =$(auto_dep_tag)
 #compilation flags
 CXXFLAGS :=--std=c++11
 #linker flags
@@ -34,7 +33,7 @@ DEPENDENCY_DIR := $(BUILD_ROOT)/dependencies
 
 sources := $(foreach dir, $(SOURCE_DIRS), $(wildcard $(dir)/*.cpp))
 objects := $(addprefix $(OBJECT_DIR)/, $(sources:.cpp=.o))
-dependencies := $(addprefix $(DEPENDENCY_DIR)/, $(notdir $(objects:.o=.d)))
+dependencies := $(addprefix $(DEPENDENCY_DIR)/, $(sources:.cpp=.d))
 
 #compile rules
 .DEFAULT_GOAL: all
@@ -69,3 +68,4 @@ cleandep:
 
 #macroes
 get_dep_adderss = $(subst $(OBJECT_DIR), $(DEPENDENCY_DIR), $(@D))
+auto_dep_tag = -MMD -MF $(get_dep_adderss)/$(basename $(@F)).d
