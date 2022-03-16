@@ -1,7 +1,7 @@
 #	makefile made by Mohammad Reza Baxayesh
 #	contact me: m.r.Bakhshayesh1123@gmail.com
 
-#Warning: using file or directory names that contain spaces may cuase some problem
+#WARNING: using file or directory names that contain spaces may cuase some problem
 
 #in order to use:
 #change OUTPUT to the output name you want
@@ -25,7 +25,11 @@ LDFLAGS :=
 #loud liberaries
 LDLIBS :=
 
-#makefile variables (you wont need to change the rest of makefile)
+##############################################################
+##		 You don't need to make any change on the rest		##
+##############################################################
+
+#makefile variables 
 #where to save build files (people usualy dont need to see these files)
 BUILD_ROOT := .build
 OBJECT_DIR := $(BUILD_ROOT)/objects
@@ -44,8 +48,7 @@ $(OUTPUT): $(objects)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@ 
 
 $(OBJECT_DIR)/%.o: %.cpp
-	@mkdir -p $(@D)
-	@mkdir -p $(get_dep_adderss)
+	@mkdir -p $(@D) $(get_dep_adderss)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@ 
 
 #phonies
