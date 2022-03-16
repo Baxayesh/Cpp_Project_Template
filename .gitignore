@@ -1,5 +1,5 @@
-#APP_NAME from makefile here: baxayesh
-baxayesh
+#APP_NAME from makefile here: foobar
+foobar
 *.o
 *.d
 .build/
