@@ -1,0 +1,10 @@
+Main Goal:
+    Writing a easy to use c++ project template
+
+Sub Misions:
+    - Can be used for a new project by almost no change
+    - Can be used very easily and fast
+    - Will be <a href="https://github.com/Baxayesh/MigMig">migmig</a> defualt project template
+    - Has a makefile by auto dependency detection
+    - Has almost all common parts of a complete c++ project(gitignore, lisense, makefile, etc.)
+

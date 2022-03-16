@@ -69,6 +69,3 @@ cleandep:
 #includes
 -include $(dependencies)
 
-#next steps:
-#better management for header files
-#writing install and uninstall rulles
